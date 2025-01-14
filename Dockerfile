@@ -7,6 +7,10 @@ ENV LANG=en_US.UTF-8
 ENV LANGUAGE=en_US:en
 ENV LC_ALL=en_US.UTF-8
 
+# Set environment variables for building machine
+ENV MACHINE=imx8mpsolidrun
+ENV DISTRO=fsl-imx-xwayland
+
 # Install required dependencies
 RUN apt-get update && apt-get install -y \
     gawk wget git-core diffstat unzip texinfo gcc-multilib \
@@ -37,11 +41,6 @@ USER $USERNAME
 WORKDIR /home/$USERNAME
 
 # Clone required repositories
-# RUN git clone -b zeus https://git.yoctoproject.org/git/poky.git && \
-#     git clone -b zeus https://github.com/openembedded/meta-openembedded.git && \
-#     git clone -b zeus https://github.com/Freescale/meta-freescale.git && \
-#     git clone -b zeus-imx8mp https://github.com/SolidRun/meta-solidrun-arm-imx8.git
-
 RUN repo init -u https://github.com/SolidRun/meta-solidrun-arm-imx8 -b kirkstone-imx8m -m sr-imx-5.15.71-2.2.2.xml && \
     repo sync
 
